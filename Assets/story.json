@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "title": "The Enchanted Forest Adventure",
+    "version": "1.0",
+    "author": "Adventure Creator",
+    "description": "A short magical adventure through an enchanted forest with multiple endings."
+  },
+  "start": "start",
+  "scenes": {
+    "start": {
+      "text": "You stand at the edge of a magical forest. Ancient trees tower above you, their leaves whispering secrets of forgotten times. The air hums with ancient magic, and two paths lie before you.",
+      "images": [
+        "images/forest_edge.jpg",
+        "images/ancient_trees.jpg"
+      ],
+      "choices": [
+        { "text": "Follow the sunlit path", "next": "sunny_glen" },
+        { "text": "Investigate the dark, mossy trail", "next": "dark_thicket" }
+      ]
+    },
+    "sunny_glen": {
+      "text": "You follow the sunlit path to a peaceful glen where golden light filters through the canopy. A friendly squirrel approaches you, holding a glowing acorn in its paws.",
+      "images": [
+        "images/sunny_glen.jpg",
+        "images/friendly_squirrel.jpg"
+      ],
+      "choices": [
+        { "text": "Take the offered acorn", "next": "whispering_oak" },
+        { "text": "Politely decline and continue", "next": "babbling_brook" }
+      ]
+    },
+    "whispering_oak": {
+      "text": "The acorn begins to glow brighter in your hand. As you approach an ancient oak tree, the acorn pulses with energy. The tree's bark shifts, revealing a hidden doorway.",
+      "images": [
+        "images/whispering_oak.jpg",
+        "images/glowing_acorn.jpg",
+        "images/hidden_doorway.jpg"
+      ],
+      "choices": [
+        { "text": "Enter the tree", "next": "ending_treasure" },
+        { "text": "Stay outside", "next": "ending_curiosity" }
+      ]
+    },
+    "babbling_brook": {
+      "text": "You continue along the path until you reach a crystal-clear brook. The water sparkles with magical energy, and as you gaze into it, your reflection shows not your current self, but a possible future version.",
+      "images": [
+        "images/babbling_brook.jpg",
+        "images/magical_water.jpg"
+      ],
+      "choices": [
+        { "text": "Study the vision in the water", "next": "ending_reflection" }
+      ]
+    },
+    "dark_thicket": {
+      "text": "The dark, mossy trail leads you into a dense thicket where little light penetrates. The air grows cold, and you sense movement in the shadows. A pair of glowing eyes appears before you.",
+      "images": [
+        "images/dark_thicket.jpg",
+        "images/glowing_eyes.jpg"
+      ],
+      "choices": [
+        { "text": "Draw your weapon", "next": "ending_ambush" },
+        { "text": "Offer a peaceful gesture", "next": "guardian" }
+      ]
+    },
+    "guardian": {
+      "text": "A wise old wolf emerges from the shadows. His fur is silvered with age, and his eyes hold ancient knowledge. He regards you carefully, testing your courage without words.",
+      "images": [
+        "images/wise_wolf.jpg",
+        "images/forest_guardian.jpg"
+      ],
+      "choices": [
+        { "text": "Stand your ground", "next": "ending_respect" },
+        { "text": "Run away", "next": "ending_lost" }
+      ]
+    },
+    "ending_treasure": {
+      "text": "Inside the tree, you discover the long-lost treasure of the forest king! Jewels, ancient artifacts, and magical items glitter in the dim light. You are now rich beyond imagination.",
+      "images": [
+        "images/treasure_room.jpg",
+        "images/forest_treasure.jpg"
+      ],
+      "choices": []
+    },
+    "ending_curiosity": {
+      "text": "As you hesitate, the tree's doorway slowly closes. You're safe outside, but a deep regret fills you as you wonder what wonders you might have discovered within.",
+      "images": [
+        "images/closing_doorway.jpg",
+        "images/regret.jpg"
+      ],
+      "choices": []
+    },
+    "ending_reflection": {
+      "text": "The vision in the water shows you a future where you've gained great wisdom. You understand things you never could before, seeing the interconnectedness of all life in the forest.",
+      "images": [
+        "images/future_vision.jpg",
+        "images/wisdom.jpg"
+      ],
+      "choices": []
+    },
+    "ending_ambush": {
+      "text": "As you draw your weapon, goblins leap from the shadows! They overwhelm you with numbers, and your adventure ends here in the dark thicket.",
+      "images": [
+        "images/goblin_ambush.jpg",
+        "images/game_over.jpg"
+      ],
+      "choices": []
+    },
+    "ending_respect": {
+      "text": "The wolf nods in approval and grants you a powerful boon - the ability to understand the language of all forest creatures. You gain a new respect for the natural world.",
+      "images": [
+        "images/wolf_approval.jpg",
+        "images/forest_boon.jpg"
+      ],
+      "choices": []
+    },
+    "ending_lost": {
+      "text": "You turn and run blindly through the forest. When you finally stop, you realize you're completely lost, with no idea how to find your way back to familiar paths.",
+      "images": [
+        "images/lost_forest.jpg",
+        "images/hopeless.jpg"
+      ],
+      "choices": []
+    }
+  }
+}

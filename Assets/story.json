@@ -1,125 +1,216 @@
 {
   "meta": {
-    "title": "The Enchanted Forest Adventure",
-    "version": "1.0",
-    "author": "Adventure Creator",
-    "description": "A short magical adventure through an enchanted forest with multiple endings."
+    "title": "The Last Blade of Ashikaga",
+    "version": "2.0",
+    "author": "Deeraj S",
+    "description": "Kyoto, 1467. The Onin War has torn the capital apart. Your lord is dead, his sacred sword stolen. You are the last samurai of your clan — and the last one who can set things right."
   },
-  "start": "start",
+  "start": "prologue",
   "scenes": {
-    "start": {
-      "text": "You stand at the edge of a magical forest. Ancient trees tower above you, their leaves whispering secrets of forgotten times. The air hums with ancient magic, and two paths lie before you.",
-      "images": [
-        "images/forest_edge.jpg",
-        "images/ancient_trees.jpg"
-      ],
+
+    "prologue": {
+      "text": "Kyoto burns.\n\nYou stand in the smouldering ruins of the Ashikaga estate, the smell of charred wood thick in the throat. Three days ago, you were a sworn retainer of Lord Ashikaga Nobuhide. Three days ago, he had a pulse.\n\nNow his body lies beneath a collapsed beam, and the clan's ancestral blade — Kurogane, 'Iron Darkness' — is gone. Stolen by men who wore the mon of the Yamana clan on their backs as they fled north.\n\nYou have no lord. No clan. No purpose.\n\nBut you have your sword. And you have the direction they ran.",
+      "images": [],
       "choices": [
-        { "text": "Follow the sunlit path", "next": "sunny_glen" },
-        { "text": "Investigate the dark, mossy trail", "next": "dark_thicket" }
+        { "text": "Head to the merchant district — someone saw something.", "next": "merchant_district" },
+        { "text": "Go straight north. You know where the Yamana hold their territory.", "next": "northern_road" }
       ]
     },
-    "sunny_glen": {
-      "text": "You follow the sunlit path to a peaceful glen where golden light filters through the canopy. A friendly squirrel approaches you, holding a glowing acorn in its paws.",
-      "images": [
-        "images/sunny_glen.jpg",
-        "images/friendly_squirrel.jpg"
-      ],
+
+    "merchant_district": {
+      "text": "The Nishiki market is still open, because merchants open their stalls through war, plague, and fire alike. Some things are more reliable than the seasons.\n\nYou press a coin into the palm of a river ferryman with sharp eyes. He glances at the crest on your sleeve and nods slowly.\n\n\"Seven men, armoured, moving fast. Took the mountain pass, not the road — they didn't want to be seen. One of them was carrying something long, wrapped in black silk.\"\n\nHe pauses. \"There's a monk at the temple of Ryoan-ji. He tends to know things about travellers through the pass. Might be worth a visit.\"\n\nA cry from the far end of the market: a group of soldiers in Yamana colours are shaking down a merchant, demanding to know if anyone has seen a ronin asking questions.",
+      "images": [],
       "choices": [
-        { "text": "Take the offered acorn", "next": "whispering_oak" },
-        { "text": "Politely decline and continue", "next": "babbling_brook" }
+        { "text": "Slip away quietly to Ryoan-ji temple before they spot you.", "next": "ryoanji_temple" },
+        { "text": "Stay hidden and listen — they might reveal something useful.", "next": "eavesdrop" },
+        { "text": "Confront the Yamana soldiers.", "next": "confront_soldiers" }
       ]
     },
-    "whispering_oak": {
-      "text": "The acorn begins to glow brighter in your hand. As you approach an ancient oak tree, the acorn pulses with energy. The tree's bark shifts, revealing a hidden doorway.",
-      "images": [
-        "images/whispering_oak.jpg",
-        "images/glowing_acorn.jpg",
-        "images/hidden_doorway.jpg"
-      ],
+
+    "northern_road": {
+      "text": "The northern road out of Kyoto is choked with refugees fleeing the fighting. You move against the tide, drawing sidelong looks from families pushing carts of bundled possessions.\n\nAfter two hours of walking, the crowds thin and the cedar forests close in. The road narrows to a dirt track.\n\nYou hear them before you see them — three men, crouched around a small fire in the tree line. Yamana scouts, resting, swords laid carelessly across their packs. They haven't seen you yet.\n\nA fourth man is relieving himself against a cedar tree, back turned. There's a folded paper pinned beneath one of the packs — possibly a route map.",
+      "images": [],
       "choices": [
-        { "text": "Enter the tree", "next": "ending_treasure" },
-        { "text": "Stay outside", "next": "ending_curiosity" }
+        { "text": "Approach openly — demand to know where Kurogane was taken.", "next": "scouts_confrontation" },
+        { "text": "Steal the map while they're distracted and slip away.", "next": "steal_map" },
+        { "text": "Wait and follow them when they move.", "next": "follow_scouts" }
       ]
     },
-    "babbling_brook": {
-      "text": "You continue along the path until you reach a crystal-clear brook. The water sparkles with magical energy, and as you gaze into it, your reflection shows not your current self, but a possible future version.",
-      "images": [
-        "images/babbling_brook.jpg",
-        "images/magical_water.jpg"
-      ],
+
+    "eavesdrop": {
+      "text": "You press into the shadow of a dyer's stall, the fabric hanging around you stinking of indigo.\n\nThe soldiers are agitated. One of them keeps looking over his shoulder. Their words float across the market:\n\n\"...shouldn't have taken the sword, that was never the plan...\"\n\"Quiet. Commander Ryoichi's orders. The sword goes to the mountain fortress, end of discussion.\"\n\"And when the Ashikaga ronin catches up with us?\"\n\nA cold laugh. \"Let him try. The mountain fortress has forty men and Lord Okita himself.\"\n\nThe mountain fortress. Okita. You have a name now, and a location — the fortified garrison above the Kurama pass.",
+      "images": [],
       "choices": [
-        { "text": "Study the vision in the water", "next": "ending_reflection" }
+        { "text": "Go to Ryoan-ji temple — you need information about the fortress.", "next": "ryoanji_temple" },
+        { "text": "Go directly to the Kurama pass. You've heard enough.", "next": "kurama_pass" }
       ]
     },
-    "dark_thicket": {
-      "text": "The dark, mossy trail leads you into a dense thicket where little light penetrates. The air grows cold, and you sense movement in the shadows. A pair of glowing eyes appears before you.",
-      "images": [
-        "images/dark_thicket.jpg",
-        "images/glowing_eyes.jpg"
-      ],
+
+    "confront_soldiers": {
+      "text": "You step into the centre of the market. Three Yamana soldiers turn to face you. They recognise the Ashikaga crest before you say a word.\n\n\"Ronin.\" The largest one draws steel. \"You have no master to protect you now.\"\n\nThe fight is short and brutal. You put two of them down with shallow wounds. The third runs. The merchant you saved stares at you, trembling.\n\n\"Thank you,\" he says quietly. \"But you've announced yourself to every Yamana man in Kyoto. They'll know you're coming.\"\n\nYou take the sword of the fallen soldier — a decent blade, nothing more — and wrap your own crest out of sight. Too late for subtlety now. Time to move.",
+      "images": [],
       "choices": [
-        { "text": "Draw your weapon", "next": "ending_ambush" },
-        { "text": "Offer a peaceful gesture", "next": "guardian" }
+        { "text": "Move immediately to Ryoan-ji before they mobilise.", "next": "ryoanji_temple" },
+        { "text": "Go straight to the Kurama pass — speed over information.", "next": "kurama_pass" }
       ]
     },
-    "guardian": {
-      "text": "A wise old wolf emerges from the shadows. His fur is silvered with age, and his eyes hold ancient knowledge. He regards you carefully, testing your courage without words.",
-      "images": [
-        "images/wise_wolf.jpg",
-        "images/forest_guardian.jpg"
-      ],
+
+    "ryoanji_temple": {
+      "text": "The stone garden of Ryoan-ji is still, the raked gravel patterns undisturbed by the war raging a mile away. A monk in grey robes stands at its edge, watching the stones as though they might tell him something.\n\nHe speaks before you reach him.\n\n\"The sword you seek is at Okita's garrison above the Kurama pass. Lord Okita is not loyal to the Yamana — he is using them. He believes Kurogane is a spirit-blade that grants authority over the eastern clans. He is wrong about the magic, but right that it is a symbol of immense power.\"\n\nThe monk turns. His eyes are calm and very old.\n\n\"There are two ways into the fortress. The gate — heavily guarded. Or the cliff path behind the garrison, known only to the monks who once supplied it. I can draw you a map.\" He pauses. \"I ask only one thing in return: if you retrieve the sword, bring it here first. Swear it.\"\n\nYou study the old man's face.",
+      "images": [],
       "choices": [
-        { "text": "Stand your ground", "next": "ending_respect" },
-        { "text": "Run away", "next": "ending_lost" }
+        { "text": "Swear the oath. Take the map and the cliff path.", "next": "cliff_path" },
+        { "text": "Accept the map but make no promises.", "next": "kurama_pass" },
+        { "text": "Decline the map. You'll find your own way.", "next": "kurama_pass" }
       ]
     },
-    "ending_treasure": {
-      "text": "Inside the tree, you discover the long-lost treasure of the forest king! Jewels, ancient artifacts, and magical items glitter in the dim light. You are now rich beyond imagination.",
-      "images": [
-        "images/treasure_room.jpg",
-        "images/forest_treasure.jpg"
-      ],
+
+    "scouts_confrontation": {
+      "text": "You walk into their camp with your hand resting on your hilt. The scouts scramble upright, reaching for weapons.\n\n\"I am Kato Hiroshi, retainer of the late Lord Ashikaga,\" you say. \"The blade you are carrying north does not belong to you. Tell me where it is being taken, and I will let you walk away.\"\n\nTwo of them attack. The third throws down his sword after watching what you do to the first two. He talks quickly.\n\n\"Okita's fortress. Kurama pass. The sword was delivered at dawn today.\"\n\nYou let him go. His hands were shaking when he ran.",
+      "images": [],
+      "choices": [
+        { "text": "Head directly to the Kurama pass.", "next": "kurama_pass" },
+        { "text": "Double back to Ryoan-ji first — you want information about the fortress.", "next": "ryoanji_temple" }
+      ]
+    },
+
+    "steal_map": {
+      "text": "You wait until all four scouts are distracted, then move between the trees with careful steps. Your hand slides beneath the pack and lifts the folded paper without disturbing anything else.\n\nYou're twenty metres away before they notice the map is gone.\n\nOpened beneath the branches, it shows a detailed sketch of the mountain pass routes — and in the margin, someone has drawn a small fortress schematic with a note: *cliff entry — use only in emergency.*\n\nA cliff entry. That's interesting.",
+      "images": [],
+      "choices": [
+        { "text": "Take the cliff path noted on the map.", "next": "cliff_path" },
+        { "text": "Go to the main gate — you prefer to walk in openly.", "next": "kurama_pass" }
+      ]
+    },
+
+    "follow_scouts": {
+      "text": "You trail the scouts for two hours through cedar and pine, keeping to the shadow of the tree line. They move with the confidence of men who believe no one is watching.\n\nThey lead you directly to the garrison — a stone structure set into the mountainside above the pass, torchlight moving behind arrow slits. You count the guards at the gate: six, plus a patrol circuit.\n\nMore usefully, you watch as one scout slips around the rear of the fortress to a narrow track that angles up the cliff face. A supply route, unguarded.\n\nYou've seen enough.",
+      "images": [],
+      "choices": [
+        { "text": "Take the cliff path at the rear of the fortress.", "next": "cliff_path" },
+        { "text": "Walk directly to the main gate and issue a formal challenge.", "next": "gate_challenge" }
+      ]
+    },
+
+    "kurama_pass": {
+      "text": "The Kurama pass cuts through the mountains north of Kyoto like a wound — narrow, steep, and watchful. By the time you reach the upper path, the city is a smear of distant smoke below.\n\nThe garrison sits where the pass flattens into a ridge: heavy gate, stone walls, guards pacing with lanterns even in daylight. Forty men, you were told. You count the visible ones and believe it.\n\nA notice board beside the road bears a fresh posting — a message from Lord Okita, inviting anyone with a grievance to petition him openly at the gate. A calculated show of authority.\n\nThe notice is almost certainly bait.",
+      "images": [],
+      "choices": [
+        { "text": "Issue a formal challenge at the gate — you want this witnessed.", "next": "gate_challenge" },
+        { "text": "Look for another way in. The cliff to the rear looks possible.", "next": "cliff_path" }
+      ]
+    },
+
+    "cliff_path": {
+      "text": "The cliff path is barely a path — more a series of decisions about where to place your feet. You move in darkness, one hand pressed against cold stone, the other keeping your scabbard from scraping the rock face.\n\nAbove you, torchlight passes behind a narrow window slit. You count breaths. The light moves on.\n\nYou pull yourself over the parapet ledge and onto a flat roof section. Below: a courtyard, two guards talking in low voices, a storehouse, and — through a sliding door left ajar — the warm glow of an interior room.\n\nFrom this angle you can see the sword stand inside the room. Kurogane is there, its black lacquered scabbard unmistakable.\n\nAnd seated beside it, reading by candlelight, is a man you don't recognise. Alone.",
+      "images": [],
+      "choices": [
+        { "text": "Drop into the courtyard and take the sword quietly while the man reads.", "next": "stealth_retrieval" },
+        { "text": "Observe the man more closely — something feels wrong.", "next": "observe_okita" }
+      ]
+    },
+
+    "gate_challenge": {
+      "text": "You walk to the gate and speak your name and your clan's name in a clear, carrying voice.\n\n\"I am Kato Hiroshi, sworn retainer of Lord Ashikaga Nobuhide, who is dead. I have come for the blade Kurogane, which was taken from his estate without right. I request it be returned, or I request the satisfaction of a formal duel with whoever ordered its taking.\"\n\nA long silence from behind the gate.\n\nThen it opens.\n\nA man steps out — measured, grey-haired, wearing armour that has clearly seen real use. He looks at you with something that might be respect.\n\n\"A formal challenge,\" he says. \"I haven't heard one of those in six years.\" He tilts his head. \"I am Lord Okita Masamune. I will meet your challenge myself, at dawn, in the courtyard. You will be given a room, food, and no harm. This I swear.\"\n\nSomething about his manner is not what you expected from a thief.",
+      "images": [],
+      "choices": [
+        { "text": "Accept his hospitality and wait for dawn.", "next": "the_duel_eve" },
+        { "text": "Demand the sword immediately, duel or not.", "next": "tense_standoff" }
+      ]
+    },
+
+    "observe_okita": {
+      "text": "You watch the man for a long moment.\n\nHe's not guarding the sword — he's not even facing it. He's writing in a journal, and from this angle you can make out the top line of the open page: *...the Ashikaga retainer will come. I hope he is the honourable kind.*\n\nHe knows you're coming. He's been expecting you. And he left the door ajar.\n\nThis is not a trap — or if it is, it's not the violent kind. You weigh your options as a guard patrol rounds the far corner of the courtyard below.",
+      "images": [],
+      "choices": [
+        { "text": "Enter through the open door. Speak with him directly.", "next": "the_conversation" },
+        { "text": "Take the sword while he's distracted and leave before things get complicated.", "next": "stealth_retrieval" }
+      ]
+    },
+
+    "stealth_retrieval": {
+      "text": "You move like water down the interior stairs, past the distracted guards, and into the room. Kurogane sits in its stand, three steps away. The man reading at the desk does not look up.\n\nYour hand closes around the scabbard.\n\n\"I wondered which choice you'd make.\"\n\nHis voice is calm. Not alarmed. You turn, blade in hand, ready.\n\nLord Okita sets down his brush and looks at you directly for the first time. He's older than he looked from the roof — somewhere past fifty, with a healed scar across his jaw and eyes that have seen too much to pretend otherwise.\n\n\"The sword is yours,\" he says. \"It always was. But before you go, I'd like you to understand why it was taken, and who actually ordered it.\"",
+      "images": [],
+      "choices": [
+        { "text": "Hear him out. You've come this far.", "next": "the_revelation" },
+        { "text": "Leave with the sword. Whatever he has to say doesn't matter now.", "next": "ending_sword_only" }
+      ]
+    },
+
+    "the_conversation": {
+      "text": "Lord Okita looks up when you open the door. He nods once, as if confirming something to himself.\n\n\"Sit,\" he says. Not a command — an invitation. \"I'll have tea brought. You've been climbing in the dark for an hour and you deserve it.\"\n\nYou sit, sword across your knees, watching him.\n\n\"I didn't order the theft of Kurogane,\" he says. \"Commander Ryoichi acted without my authority — he believed bringing the sword here would force my hand, make me commit to the Yamana faction. He was wrong, but by the time I knew what he'd done, your lord was dead and the damage was finished.\"\n\nHe slides the sword stand toward you across the floor.\n\n\"Take it. It belongs to the Ashikaga legacy, not to me. But I need to tell you something about what's coming, because you're going to be one of the few samurai left who still holds to the old codes.\"",
+      "images": [],
+      "choices": [
+        { "text": "Take the sword and listen to what he has to say.", "next": "the_revelation" },
+        { "text": "Take the sword and leave. You need time to think.", "next": "ending_sword_only" }
+      ]
+    },
+
+    "the_duel_eve": {
+      "text": "They give you a small room with a clean mat, cold water, and a tray of rice and pickled vegetables. Simple, but the gesture is genuine.\n\nYou clean your sword by candlelight and think about what a thief looks like. Lord Okita doesn't look like one. He looked like a man keeping an appointment he wasn't sure he'd made.\n\nAt midnight, a soft knock. A young attendant slides the door open, bows, and sets something on the floor without looking at you: a lacquered box. Inside it, when the boy is gone, is Kurogane.\n\nNo note. No explanation.\n\nDawn comes grey and cold. The gate is unguarded.",
+      "images": [],
+      "choices": [
+        { "text": "Take the sword and leave before anyone rises.", "next": "ending_quiet_departure" },
+        { "text": "Stay for the duel you agreed to. Honour the arrangement.", "next": "the_duel" }
+      ]
+    },
+
+    "tense_standoff": {
+      "text": "The garrison soldiers fan out slowly, hands on hilts. Lord Okita raises a hand and they stop.\n\n\"The sword,\" you say again.\n\nHe holds your gaze for a long time. Then he does something unexpected: he turns to the soldier beside him and says, simply, \"Bring it.\"\n\nKurogane arrives in its black scabbard. The soldier holds it out at arm's length and you take it, never breaking eye contact with Okita.\n\n\"You'll want to know who is really responsible for your lord's death,\" he says quietly. \"It wasn't me, and it wasn't my men. I can tell you, if you're willing to stand here for two more minutes.\"\n\nForty soldiers watch you.",
+      "images": [],
+      "choices": [
+        { "text": "Listen. Two minutes.", "next": "the_revelation" },
+        { "text": "Leave. You have the sword — nothing else matters right now.", "next": "ending_sword_only" }
+      ]
+    },
+
+    "the_revelation": {
+      "text": "What Lord Okita tells you takes less than ten minutes, but it changes everything.\n\nThe order didn't come from the Yamana clan. It came from within the Ashikaga household — a senior advisor named Tanaka Goro, who had been quietly selling military positions and land rights for a year, and who feared that Lord Nobuhide was about to discover the ledgers. The Yamana were simply hired to make it look like a factional killing.\n\nOkita produces documentation: letters in Tanaka's hand, sealed with the Ashikaga household crest, authorising payment to Yamana mercenaries.\n\n\"Tanaka is still in Kyoto,\" Okita says. \"He believes the chaos of the Onin War will bury everything. He may be right, unless someone acts.\"\n\nYou hold Kurogane and feel the weight of what comes next.",
+      "images": [],
+      "choices": [
+        { "text": "Return to Kyoto and confront Tanaka Goro. This ends with him.", "next": "ending_justice" },
+        { "text": "Take the documents to the remaining Ashikaga elders. Let them decide.", "next": "ending_honour_restored" },
+        { "text": "Go to Ryoan-ji as you swore. Lay the sword at the monk's feet and let it go.", "next": "ending_release" }
+      ]
+    },
+
+    "the_duel": {
+      "text": "The courtyard at dawn is hushed. The garrison soldiers line the walls, watching. Lord Okita steps forward in light armour, his sword an old, practical blade without ornament.\n\nHe bows deeply. You return the bow.\n\nWhat follows is one of the finest duels you have ever been part of — not because of its violence, but because of its restraint. Okita is exceptional. He tests your reach, your guard, your patience. For a long minute you match each other perfectly.\n\nThen he steps back and sheathes his sword.\n\n\"That's enough,\" he says. \"You're better. You knew it and so did I.\" He reaches behind him and an attendant brings Kurogane forward on a cushion. \"Take your sword, Kato Hiroshi. And hear me out over breakfast — I have something to tell you about who truly gave the order to raid your lord's estate.\"",
+      "images": [],
+      "choices": [
+        { "text": "Accept. Hear what he has to say over breakfast.", "next": "the_revelation" }
+      ]
+    },
+
+    "ending_justice": {
+      "text": "Tanaka Goro is found in his townhouse, three streets from the burned Ashikaga estate. He has the audacity to smile when you enter.\n\n\"A ronin with a famous sword,\" he says. \"What are you going to do?\"\n\nYou place Okita's documents on his writing table and watch his smile collapse as he reads.\n\nYou don't kill him. You bind him, take him to the city magistrate — one of the few not yet compromised — and present the evidence clearly and without emotion.\n\nTanaka Goro is tried within the week. The sentence is exile — a political compromise you're not satisfied with, but real justice rarely satisfies.\n\nYou carry Kurogane out of Kyoto as the Onin War continues to burn around you. The city will take years to rebuild. Your path is your own now.\n\nBut you walked it honourably.",
+      "images": [],
       "choices": []
     },
-    "ending_curiosity": {
-      "text": "As you hesitate, the tree's doorway slowly closes. You're safe outside, but a deep regret fills you as you wonder what wonders you might have discovered within.",
-      "images": [
-        "images/closing_doorway.jpg",
-        "images/regret.jpg"
-      ],
+
+    "ending_honour_restored": {
+      "text": "The remaining Ashikaga elders are sheltering in a monastery east of the city. They receive you in a cold stone room, three old men wrapped in borrowed robes, looking like men who have outlived their era.\n\nYou lay Kurogane and Okita's documents on the floor before them and tell them everything, plainly.\n\nThe eldest picks up the sword. His hands are steady, though his eyes are not.\n\n\"The clan is finished,\" he says quietly. \"We know that. But the truth should not be buried with us.\"\n\nThey send copies of the documents to three different noble houses. Tanaka Goro disappears from Kyoto within the month — whether from guilt, fear, or someone's intervention, you never learn.\n\nYou remain as informal guardian of the monastery until the worst of the war passes. Kurogane hangs on the wall above the door, where everyone can see it.",
+      "images": [],
       "choices": []
     },
-    "ending_reflection": {
-      "text": "The vision in the water shows you a future where you've gained great wisdom. You understand things you never could before, seeing the interconnectedness of all life in the forest.",
-      "images": [
-        "images/future_vision.jpg",
-        "images/wisdom.jpg"
-      ],
+
+    "ending_release": {
+      "text": "Ryoan-ji is quiet in the late afternoon, the stone garden throwing long shadows across its raked patterns.\n\nThe old monk is waiting. He was always going to be waiting.\n\nYou kneel and place Kurogane before him, both hands, the way a gift should be given.\n\n\"The sword is a symbol,\" he says softly. \"People will come here to look at it. They'll remember what it meant. Sometimes that is more useful than revenge.\"\n\nYou walk out of Kyoto at dusk, carrying nothing but your own blade and the strange lightness of a man who has put something down.\n\nThe war will last ten more years. You'll have nothing to do with it.\n\nSome things are heavier than swords.",
+      "images": [],
       "choices": []
     },
-    "ending_ambush": {
-      "text": "As you draw your weapon, goblins leap from the shadows! They overwhelm you with numbers, and your adventure ends here in the dark thicket.",
-      "images": [
-        "images/goblin_ambush.jpg",
-        "images/game_over.jpg"
-      ],
+
+    "ending_sword_only": {
+      "text": "You take the sword and go.\n\nThe mountain air is cold and clear as you descend. Below, Kyoto burns and rebuilds and burns again in the endless cycle of men who want things that belong to other men.\n\nYou don't know who is truly responsible. You don't have names or documents or the clarity that comes from listening when someone offers it.\n\nYou have Kurogane. You have your life. You have the road.\n\nFor now, that has to be enough.\n\nSomewhere behind you, truths are being buried. Whether they stay buried depends on someone else now.\n\nYou walk north into the mountains and do not look back.",
+      "images": [],
       "choices": []
     },
-    "ending_respect": {
-      "text": "The wolf nods in approval and grants you a powerful boon - the ability to understand the language of all forest creatures. You gain a new respect for the natural world.",
-      "images": [
-        "images/wolf_approval.jpg",
-        "images/forest_boon.jpg"
-      ],
-      "choices": []
-    },
-    "ending_lost": {
-      "text": "You turn and run blindly through the forest. When you finally stop, you realize you're completely lost, with no idea how to find your way back to familiar paths.",
-      "images": [
-        "images/lost_forest.jpg",
-        "images/hopeless.jpg"
-      ],
+
+    "ending_quiet_departure": {
+      "text": "You leave before the garrison wakes.\n\nNo one follows. No alarm is raised. Lord Okita, it seems, has decided to let you go — an act of mercy or of wisdom, and you're not certain which.\n\nKurogane is in your hands. The morning mist is on the mountains. The road back to Kyoto stretches downward through the pines.\n\nYou'll never know what Okita wanted to tell you. You'll never know the full shape of the conspiracy that killed your lord. There's a particular kind of peace that comes from choosing not to know — and a particular kind of weight.\n\nYou carry both, the same way you carry the sword.\n\nLife goes on. The past is a heavy country. You choose to leave it.",
+      "images": [],
       "choices": []
     }
+
   }
 }

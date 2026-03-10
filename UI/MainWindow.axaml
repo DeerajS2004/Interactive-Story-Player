@@ -103,7 +103,7 @@
             <Border Background="#00000080" />
             
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="40">
-                <TextBlock Text="The Enchanted Forest" FontSize="56" FontWeight="Bold" 
+                <TextBlock Name="TitleText" Text="The Enchanted Forest" FontSize="56" FontWeight="Bold" 
                            Foreground="White" TextAlignment="Center">
                     <TextBlock.Effect>
                         <DropShadowEffect Color="#000000" OffsetX="2" OffsetY="2" BlurRadius="6"/>

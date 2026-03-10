@@ -18,60 +18,33 @@ public partial class MainWindow : Window
     private readonly StoryLoader _storyLoader;
     private readonly SaveSystem _saveSystem;
 
-    // UI Controls
     private Grid? _mainMenuGrid;
     private Grid? _storyPlayerGrid;
     private TextBlock? _sceneText;
     private Image? _backgroundImage;
-    private StackPanel? _imagesPanel; // Changed to support multiple images
+    private StackPanel? _imagesPanel;
     private StackPanel? _choicesPanel;
     private TextBlock? _statusText;
+    private TextBlock? _titleText;
 
     private readonly string _defaultStoryPath;
 
     public MainWindow()
     {
         InitializeComponent();
-        
+
         _engine = new StoryEngine();
         _storyLoader = new StoryLoader();
         _saveSystem = new SaveSystem();
-        
+
         _defaultStoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "story.json");
 
         InitializeControls();
         SetupEventHandlers();
         LoadBackgroundImage();
 
-        AttachEventHandlers();
-
-        UpdateStatus("Welcome to The Enchanted Forest");
+        UpdateStatus("Welcome! Start a new story or load your progress.");
     }
-
-    private void AttachEventHandlers()
-{
-    // Manually wire up all button click events
-    var startButton = this.FindControl<Button>("StartNewStoryButton");
-    var loadButton = this.FindControl<Button>("LoadProgressButton");
-    var exitButton = this.FindControl<Button>("ExitGameButton");
-    var backToMenuButton = this.FindControl<Button>("BackToMenuButton");
-    var saveProgressButton = this.FindControl<Button>("SaveProgressButton");
-
-    if (startButton != null)
-        startButton.Click += OnStartNewStoryClick;
-    
-    if (loadButton != null)
-        loadButton.Click += OnLoadProgressClick;
-        
-    if (exitButton != null)
-        exitButton.Click += OnExitClick;
-        
-    if (backToMenuButton != null)
-        backToMenuButton.Click += OnBackToMenuClick;
-        
-    if (saveProgressButton != null)
-        saveProgressButton.Click += OnSaveProgressClick;
-}
 
     private void InitializeControls()
     {
@@ -82,6 +55,7 @@ public partial class MainWindow : Window
         _imagesPanel = this.FindControl<StackPanel>("ImagesPanel");
         _choicesPanel = this.FindControl<StackPanel>("ChoicesPanel");
         _statusText = this.FindControl<TextBlock>("StatusText");
+        _titleText = this.FindControl<TextBlock>("TitleText");
     }
 
     private void SetupEventHandlers()
@@ -96,245 +70,131 @@ public partial class MainWindow : Window
         {
             var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "images", "forest_edge.jpg");
             if (File.Exists(imagePath) && _backgroundImage != null)
-            {
                 _backgroundImage.Source = new Bitmap(imagePath);
-            }
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading background image: {ex.Message}");
-        }
+        catch { /* Background image is optional */ }
     }
 
     private async void OnStartNewStoryClick(object? sender, RoutedEventArgs e)
-{
-    Console.WriteLine("Start New Story clicked"); // Debug
-    
-    if (File.Exists(_defaultStoryPath))
     {
+        if (!File.Exists(_defaultStoryPath))
+        {
+            UpdateStatus("Story file not found.");
+            return;
+        }
+
         var story = await _storyLoader.LoadStoryAsync(_defaultStoryPath);
         if (story != null)
         {
             _engine.Load(story);
-            // Start fresh - don't load any saved progress
+            if (_titleText != null)
+                _titleText.Text = story.Meta?.Title ?? "Interactive Story";
             ShowStoryPlayer();
-            ForceUIRefresh(); // Force UI update
-            UpdateStatus("New story started!");
-        }
-    }
-    else
-    {
-        UpdateStatus("Story file not found");
-    }
-}
-
-
-private void ForceUIRefresh()
-{
-    // Force layout update
-    this.InvalidateVisual();
-    this.UpdateLayout();
-    
-    // Update scene display
-    UpdateSceneUI();
-}
-
-
-
-
-    private async Task StartNewStory()
-    {
-        if (File.Exists(_defaultStoryPath))
-        {
-            var story = await _storyLoader.LoadStoryAsync(_defaultStoryPath);
-            if (story != null)
-            {
-                _engine.Load(story);
-                ShowStoryPlayer();
-                UpdateStatus("Story started!");
-            }
-            else
-            {
-                UpdateStatus("Failed to load story");
-            }
+            UpdateStatus("New story started.");
         }
         else
         {
-            UpdateStatus("Default story not found");
+            UpdateStatus("Failed to load story.");
         }
     }
 
-   private async void OnLoadProgressClick(object? sender, RoutedEventArgs e)
-{
-    Console.WriteLine("Load Progress clicked"); // Debug
-    
-    var saveData = await _saveSystem.LoadAsync();
-    if (saveData?.StoryFilePath != null && File.Exists(saveData.StoryFilePath))
+    private async void OnLoadProgressClick(object? sender, RoutedEventArgs e)
     {
+        var saveData = await _saveSystem.LoadAsync();
+        if (saveData?.StoryFilePath == null || !File.Exists(saveData.StoryFilePath))
+        {
+            UpdateStatus("No saved progress found.");
+            return;
+        }
+
         var story = await _storyLoader.LoadStoryAsync(saveData.StoryFilePath);
         if (story != null)
         {
             _engine.Load(story);
-            
-            // CRITICAL: Navigate to saved scene, not start scene
             if (!string.IsNullOrEmpty(saveData.CurrentSceneId))
-            {
                 _engine.GoTo(saveData.CurrentSceneId);
-                Console.WriteLine($"Loaded scene: {saveData.CurrentSceneId}");
-            }
-            
+
+            if (_titleText != null)
+                _titleText.Text = story.Meta?.Title ?? "Interactive Story";
+
             ShowStoryPlayer();
-            ForceUIRefresh(); // Force UI update
-            UpdateStatus($"Loaded from: {saveData.CurrentSceneId}");
-        }
-    }
-    else
-    {
-        UpdateStatus("No saved progress found");
-    }
-}
-
-
-
-    private async Task LoadProgress()
-    {
-        var saveData = await _saveSystem.LoadAsync();
-        if (saveData?.StoryFilePath != null && File.Exists(saveData.StoryFilePath))
-        {
-            var story = await _storyLoader.LoadStoryAsync(saveData.StoryFilePath);
-            if (story != null)
-            {
-                _engine.Load(story);
-                if (saveData.CurrentSceneId != null)
-                {
-                    _engine.GoTo(saveData.CurrentSceneId);
-                }
-                ShowStoryPlayer();
-                UpdateStatus("Progress loaded!");
-            }
+            UpdateStatus($"Loaded from: {saveData.SavedDate:g}");
         }
         else
         {
-            UpdateStatus("No saved progress found");
+            UpdateStatus("Failed to load story file.");
         }
     }
 
-    private void OnExitClick(object? sender, RoutedEventArgs e)
-    {
-        Close();
-    }
+    private void OnExitClick(object? sender, RoutedEventArgs e) => Close();
 
     private void OnBackToMenuClick(object? sender, RoutedEventArgs e)
     {
         ShowMainMenu();
-        UpdateStatus("Back to main menu");
+        UpdateStatus("Back to main menu.");
     }
 
     private async void OnSaveProgressClick(object? sender, RoutedEventArgs e)
-{
-    Console.WriteLine($"Save Progress clicked - Current scene: {_engine.CurrentSceneId}"); // Debug
-    
-    if (!string.IsNullOrEmpty(_defaultStoryPath))
     {
-        await _saveSystem.SaveAsync(_defaultStoryPath, _engine.CurrentSceneId);
-        UpdateStatus($"Progress saved at scene: {_engine.CurrentSceneId}");
-    }
-    else
-    {
-        UpdateStatus("Cannot save - no story loaded");
-    }
-}
-
-    private async Task SaveProgress()
-    {
-        if (!string.IsNullOrEmpty(_defaultStoryPath))
+        if (string.IsNullOrEmpty(_engine.CurrentSceneId))
         {
-            await _saveSystem.SaveAsync(_defaultStoryPath, _engine.CurrentSceneId);
-            UpdateStatus("Progress saved!");
+            UpdateStatus("Nothing to save.");
+            return;
         }
+
+        await _saveSystem.SaveAsync(_defaultStoryPath, _engine.CurrentSceneId);
+        UpdateStatus($"Progress saved. ({DateTime.Now:t})");
     }
 
     private void ShowMainMenu()
     {
-        if (_mainMenuGrid != null && _storyPlayerGrid != null)
-        {
-            _storyPlayerGrid.IsVisible = false;
-            _mainMenuGrid.IsVisible = true;
-        }
+        if (_mainMenuGrid != null) _mainMenuGrid.IsVisible = true;
+        if (_storyPlayerGrid != null) _storyPlayerGrid.IsVisible = false;
     }
 
     private void ShowStoryPlayer()
     {
-        if (_mainMenuGrid != null && _storyPlayerGrid != null)
-        {
-            _mainMenuGrid.IsVisible = false;
-            _storyPlayerGrid.IsVisible = true;
-        }
+        if (_mainMenuGrid != null) _mainMenuGrid.IsVisible = false;
+        if (_storyPlayerGrid != null) _storyPlayerGrid.IsVisible = true;
     }
 
-    private void OnSceneChanged(object? sender, EventArgs e)
-    {
-        UpdateSceneUI();
-    }
+    private void OnSceneChanged(object? sender, EventArgs e) => UpdateSceneUI();
 
-   private void UpdateSceneUI()
-{
-    var scene = _engine.CurrentScene;
-    if (scene == null) 
+    private void UpdateSceneUI()
     {
-        Console.WriteLine("UpdateSceneUI: No current scene");
-        return;
-    }
+        var scene = _engine.CurrentScene;
+        if (scene == null) return;
 
-    Console.WriteLine($"UpdateSceneUI: Loading scene with text: {scene.Text.Substring(0, Math.Min(50, scene.Text.Length))}...");
-    
-    // Update text
-    if (_sceneText != null)
-    {
-        _sceneText.Text = scene.Text;
-    }
-        // Update multiple images
+        if (_sceneText != null)
+            _sceneText.Text = scene.Text;
+
         UpdateSceneImages(scene);
-
-        // Update choices
         UpdateChoices(scene.Choices);
-        
         UpdateStatus($"Scene: {_engine.CurrentSceneId}");
     }
 
-   private void UpdateSceneImages(Scene scene)
-{
-    if (_imagesPanel == null) return;
-
-    _imagesPanel.Children.Clear();
-
-    // Handle multiple images
-    var imagesToShow = new List<string>();
-    
-    // Check for new Images list first
-    if (scene.Images != null && scene.Images.Count > 0)
+    private void UpdateSceneImages(Scene scene)
     {
-        imagesToShow.AddRange(scene.Images);
-    }
-    // Fall back to single Image for backward compatibility
-    else if (!string.IsNullOrEmpty(scene.Image))
-    {
-        imagesToShow.Add(scene.Image);
-    }
+        if (_imagesPanel == null) return;
+        _imagesPanel.Children.Clear();
 
-    // Create and add image controls
-    foreach (var imagePath in imagesToShow)
-    {
-        try
+        var imagesToShow = new List<string>();
+        if (scene.Images != null && scene.Images.Count > 0)
+            imagesToShow.AddRange(scene.Images);
+        else if (!string.IsNullOrEmpty(scene.Image))
+            imagesToShow.Add(scene.Image);
+
+        foreach (var imagePath in imagesToShow)
         {
-            var storyDir = _storyLoader.GetStoryDirectory();
-            var fullImagePath = storyDir != null ? Path.Combine(storyDir, imagePath) : imagePath;
-            
-            if (File.Exists(fullImagePath))
+            try
             {
+                var storyDir = _storyLoader.GetStoryDirectory();
+                var fullPath = storyDir != null ? Path.Combine(storyDir, imagePath) : imagePath;
+                if (!File.Exists(fullPath)) continue;
+
                 var imageControl = new Image
                 {
-                    Source = new Bitmap(fullImagePath),
+                    Source = new Bitmap(fullPath),
                     Width = 300,
                     MaxHeight = 250,
                     Stretch = Avalonia.Media.Stretch.UniformToFill,
@@ -345,40 +205,65 @@ private void ForceUIRefresh()
                 var border = new Border
                 {
                     Child = imageControl,
-                    Background = new SolidColorBrush(Color.FromRgb(30, 30, 30)), // Dark background
+                    Background = new SolidColorBrush(Color.FromRgb(30, 30, 30)),
                     CornerRadius = new Avalonia.CornerRadius(12),
                     Padding = new Avalonia.Thickness(5),
-                    ClipToBounds = true
+                    ClipToBounds = true,
+                    BoxShadow = BoxShadows.Parse("0 4 12 0 #80000000")
                 };
-
-                // Dark theme shadow
-                border.BoxShadow = BoxShadows.Parse("0 4 12 0 #80000000");
 
                 _imagesPanel.Children.Add(border);
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading image {imagePath}: {ex.Message}");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading image {imagePath}: {ex.Message}");
+            }
         }
     }
-}
-
-
 
     private void UpdateChoices(List<Choice>? choices)
     {
         if (_choicesPanel == null) return;
-
         _choicesPanel.Children.Clear();
 
-        if (choices != null)
+        bool isEnding = choices == null || choices.Count == 0;
+
+        if (!isEnding)
         {
-            foreach (var choice in choices)
+            foreach (var choice in choices!)
+                _choicesPanel.Children.Add(CreateChoiceButton(choice));
+        }
+        else
+        {
+            // Ending screen: show a "The End" label and a restart button
+            var endLabel = new TextBlock
             {
-                var button = CreateChoiceButton(choice);
-                _choicesPanel.Children.Add(button);
-            }
+                Text = "— The End —",
+                FontSize = 20,
+                FontWeight = Avalonia.Media.FontWeight.Bold,
+                Foreground = new SolidColorBrush(Color.FromRgb(180, 150, 90)),
+                TextAlignment = Avalonia.Media.TextAlignment.Center,
+                Margin = new Avalonia.Thickness(0, 10, 0, 10)
+            };
+
+            var restartButton = new Button
+            {
+                Content = "↩ Play Again",
+                Classes = { "action" },
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
+                HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                Height = 55,
+                Margin = new Avalonia.Thickness(0, 5),
+                CornerRadius = new Avalonia.CornerRadius(8)
+            };
+            restartButton.Click += (_, _) =>
+            {
+                _engine.ResetToStart();
+                UpdateStatus("Story restarted.");
+            };
+
+            _choicesPanel.Children.Add(endLabel);
+            _choicesPanel.Children.Add(restartButton);
         }
     }
 
@@ -394,7 +279,6 @@ private void ForceUIRefresh()
             CornerRadius = new Avalonia.CornerRadius(8),
             Tag = choice.Next
         };
-
         button.Click += OnChoiceClick;
         return button;
     }
@@ -402,38 +286,30 @@ private void ForceUIRefresh()
     private void OnChoiceClick(object? sender, RoutedEventArgs e)
     {
         if (sender is Button button && button.Tag is string nextSceneId)
-        {
             _engine.GoTo(nextSceneId);
-        }
     }
 
     private async void OnStoryFileChanged(object? sender, EventArgs e)
     {
         var filePath = _storyLoader.GetCurrentFilePath();
-        if (filePath != null)
+        if (filePath == null) return;
+
+        var currentSceneId = _engine.CurrentSceneId;
+        var story = await _storyLoader.LoadStoryAsync(filePath);
+
+        if (story != null)
         {
-            var currentSceneId = _engine.CurrentSceneId;
-            var story = await _storyLoader.LoadStoryAsync(filePath);
-            
-            if (story != null)
-            {
-                _engine.Load(story);
-                
-                if (!string.IsNullOrEmpty(currentSceneId) && story.Scenes.ContainsKey(currentSceneId))
-                {
-                    _engine.GoTo(currentSceneId);
-                }
-                UpdateStatus("Story file updated!");
-            }
+            _engine.Load(story);
+            if (!string.IsNullOrEmpty(currentSceneId) && story.Scenes.ContainsKey(currentSceneId))
+                _engine.GoTo(currentSceneId);
+            UpdateStatus("Story file reloaded.");
         }
     }
 
     private void UpdateStatus(string message)
     {
         if (_statusText != null)
-        {
             _statusText.Text = message;
-        }
     }
 
     protected override void OnClosed(EventArgs e)
